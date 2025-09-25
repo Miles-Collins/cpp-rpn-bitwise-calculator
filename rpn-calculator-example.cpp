@@ -60,12 +60,13 @@ shared_ptr<uint16_t> rpn_calc(command const cmd, uint16_t const value = 0) {
         case cmd_clear:
             stack.clear();
             return nullptr;
-            
+    
         case cmd_pop:
             if (!stack.empty()) {
-                uint16_t top_number = stack.back();
                 stack.pop_back();
-                return make_shared<uint16_t>(top_number);
+                if (!stack.empty()) {
+                    return make_shared<uint16_t>(stack.back());
+                }
             }
             return nullptr;
             
@@ -117,17 +118,26 @@ shared_ptr<uint16_t> rpn_calc(command const cmd, uint16_t const value = 0) {
             
         case cmd_add:
             if(stack.size() >= 2) {
-                uint16_t first_num = stack.back(); stack.pop_back();
-                uint16_t second_num = stack.back(); stack.pop_back();
-                uint16_t answer = second_num + first_num;
-                if(answer != second_num + first_num) {
-                    answer = UINT16_MAX;
-                    stack.push_back(answer);
-                    return make_shared<uint16_t>(answer);
-                } else {
-                    stack.push_back(answer);
-                    return make_shared<uint16_t>(answer);
+                uint16_t a = stack.back(); stack.pop_back();
+                uint16_t b = stack.back(); stack.pop_back();
+                
+                uint16_t sum = a;
+                uint16_t addend = b;
+                
+                while (addend != 0) {
+                    uint16_t carry = sum & addend;  
+                    sum = sum ^ addend;           
+                    addend = carry << 1;         
+                    
+                    if (carry > (UINT16_MAX >> 1)) {
+                        stack.push_back(b);
+                        stack.push_back(a);
+                        return nullptr;
+                    }
                 }
+                
+                stack.push_back(sum);
+                return make_shared<uint16_t>(sum);
             }
             return nullptr;
             
