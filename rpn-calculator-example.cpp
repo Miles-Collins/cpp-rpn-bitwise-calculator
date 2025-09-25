@@ -77,9 +77,9 @@ shared_ptr<uint16_t> rpn_calc(command const cmd, uint16_t const value = 0) {
             
         case cmd_left_shift:
             if(stack.size() >= 2) {
-                uint16_t second_number = stack.back(); stack.pop_back();
-                uint16_t first_number = stack.back(); stack.pop_back();
-                uint16_t answer = first_number << second_number;
+                uint16_t first_num = stack.back(); stack.pop_back();
+                uint16_t second_num = stack.back(); stack.pop_back();
+                uint16_t answer = first_num << second_num;
                 stack.push_back(answer);
                 return make_shared<uint16_t>(answer);
             }
@@ -87,9 +87,9 @@ shared_ptr<uint16_t> rpn_calc(command const cmd, uint16_t const value = 0) {
             
         case cmd_right_shift:
             if(stack.size() >= 2) {
-                uint16_t second_number = stack.back(); stack.pop_back();
-                uint16_t first_number = stack.back(); stack.pop_back();
-                uint16_t answer = first_number >> second_number;
+                uint16_t first_num = stack.back(); stack.pop_back();
+                uint16_t second_num = stack.back(); stack.pop_back();
+                uint16_t answer = first_num >> second_num;
                 stack.push_back(answer);
                 return make_shared<uint16_t>(answer);
             }
@@ -97,9 +97,9 @@ shared_ptr<uint16_t> rpn_calc(command const cmd, uint16_t const value = 0) {
             
         case cmd_or:
             if(stack.size() >= 2) {
-                uint16_t second_number = stack.back(); stack.pop_back();
-                uint16_t first_number = stack.back(); stack.pop_back();
-                uint16_t answer = first_number | second_number;
+                uint16_t first_num = stack.back(); stack.pop_back();
+                uint16_t second_num = stack.back(); stack.pop_back();
+                uint16_t answer = first_num | second_num;
                 stack.push_back(answer);
                 return make_shared<uint16_t>(answer);
             }
@@ -107,21 +107,21 @@ shared_ptr<uint16_t> rpn_calc(command const cmd, uint16_t const value = 0) {
             
         case cmd_and:
             if(stack.size() >= 2) {
-                uint16_t second_number = stack.back(); stack.pop_back();
-                uint16_t first_number = stack.back(); stack.pop_back();
-                uint16_t answer = first_number & second_number;
+                uint16_t first_num = stack.back(); stack.pop_back();
+                uint16_t second_num = stack.back(); stack.pop_back();
+                uint32_t answer = first_num & second_num;
                 stack.push_back(answer);
-                return make_shared<uint16_t>(answer);
+                return make_shared<uint32_t>(answer);
             }
             return nullptr;
             
         case cmd_add:
             if(stack.size() >= 2) {
-                uint16_t second_number = stack.back(); stack.pop_back();
-                uint16_t first_number = stack.back(); stack.pop_back();
-                uint16_t answer = first_number + second_number;
+                uint16_t first_num = stack.back(); stack.pop_back();
+                uint16_t second_num = stack.back(); stack.pop_back();
+                uint32_t answer = first_num + second_num;
                 stack.push_back(answer);
-                return make_shared<uint16_t>(answer);
+                return make_shared<uint_t>(answer);
             }
             return nullptr;
             
