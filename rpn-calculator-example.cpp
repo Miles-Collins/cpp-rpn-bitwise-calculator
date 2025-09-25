@@ -79,7 +79,7 @@ shared_ptr<uint16_t> rpn_calc(command const cmd, uint16_t const value = 0) {
             if(stack.size() >= 2) {
                 uint16_t first_num = stack.back(); stack.pop_back();
                 uint16_t second_num = stack.back(); stack.pop_back();
-                uint16_t answer = first_num << second_num;
+                uint16_t answer = second_num << first_num;
                 stack.push_back(answer);
                 return make_shared<uint16_t>(answer);
             }
@@ -89,7 +89,7 @@ shared_ptr<uint16_t> rpn_calc(command const cmd, uint16_t const value = 0) {
             if(stack.size() >= 2) {
                 uint16_t first_num = stack.back(); stack.pop_back();
                 uint16_t second_num = stack.back(); stack.pop_back();
-                uint16_t answer = first_num >> second_num;
+                uint16_t answer = second_num >> first_num;
                 stack.push_back(answer);
                 return make_shared<uint16_t>(answer);
             }
@@ -99,7 +99,7 @@ shared_ptr<uint16_t> rpn_calc(command const cmd, uint16_t const value = 0) {
             if(stack.size() >= 2) {
                 uint16_t first_num = stack.back(); stack.pop_back();
                 uint16_t second_num = stack.back(); stack.pop_back();
-                uint16_t answer = first_num | second_num;
+                uint16_t answer = second_num | first_num;
                 stack.push_back(answer);
                 return make_shared<uint16_t>(answer);
             }
@@ -109,9 +109,9 @@ shared_ptr<uint16_t> rpn_calc(command const cmd, uint16_t const value = 0) {
             if(stack.size() >= 2) {
                 uint16_t first_num = stack.back(); stack.pop_back();
                 uint16_t second_num = stack.back(); stack.pop_back();
-                uint32_t answer = first_num & second_num;
+                uint16_t answer = second_num & first_num;
                 stack.push_back(answer);
-                return make_shared<uint32_t>(answer);
+                return make_shared<uint16_t>(answer);
             }
             return nullptr;
             
@@ -119,9 +119,15 @@ shared_ptr<uint16_t> rpn_calc(command const cmd, uint16_t const value = 0) {
             if(stack.size() >= 2) {
                 uint16_t first_num = stack.back(); stack.pop_back();
                 uint16_t second_num = stack.back(); stack.pop_back();
-                uint32_t answer = first_num + second_num;
-                stack.push_back(answer);
-                return make_shared<uint_t>(answer);
+                uint16_t answer = second_num + first_num;
+                if(answer != second_num + first_num) {
+                    answer = UINT16_MAX;
+                    stack.push_back(answer);
+                    return make_shared<uint16_t>(answer);
+                } else {
+                    stack.push_back(answer);
+                    return make_shared<uint16_t>(answer);
+                }
             }
             return nullptr;
             
