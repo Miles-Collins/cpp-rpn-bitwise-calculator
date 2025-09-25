@@ -17,7 +17,7 @@ using namespace std;
  * *** STUDENTS WILL NEED TO CHANGE INPUT_CSV_FILE PATH BELOW TO POINT TO THE rpn-input.csv FILE ***
  * *** ON THEIR LAPTOP/COMPUTER ***
  */
-#define INPUT_CSV_FILE "D:\miles\Computer-Science\rpn-bitwise-calculator"
+#define INPUT_CSV_FILE "D:\\miles\\Computer-Science\\rpn-bitwise-calculator\\rpn-input.csv"
 
 // test controls
 #define MIN_VALUE 0
