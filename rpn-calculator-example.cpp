@@ -52,59 +52,82 @@ uint8_t const width = 16U;
 static vector<uint16_t> stack;
 
 shared_ptr<uint16_t> rpn_calc(command const cmd, uint16_t const value = 0) {
-    // Students should write code for this function
     switch (cmd) {
         case cmd_enter:
             stack.push_back(value);
-            break;
+            return make_shared<uint16_t>(value);
+            
         case cmd_clear:
             stack.clear();
-            break;
+            return nullptr;
+            
         case cmd_pop:
             if (!stack.empty()) {
+                uint16_t top_number = stack.back();
                 stack.pop_back();
+                return make_shared<uint16_t>(top_number);
             }
-            break;
+            return nullptr;
+            
         case cmd_top:
             if(!stack.empty()) {
                 return make_shared<uint16_t>(stack.back());
             }
             return nullptr;
+            
         case cmd_left_shift:
             if(stack.size() >= 2) {
-                uint16_t firstNum = stack.back(); stack.pop_back();
-                uint16_t secondNum = stack.back(); stack.pop_back();
-                uint16_t numSums = secondNum << firstNum;
-                stack.push_back(numSums);
-                return make_shared<uint16_t>(numSums);
+                uint16_t second_number = stack.back(); stack.pop_back();
+                uint16_t first_number = stack.back(); stack.pop_back();
+                uint16_t answer = first_number << second_number;
+                stack.push_back(answer);
+                return make_shared<uint16_t>(answer);
             }
+            return nullptr;
+            
         case cmd_right_shift:
             if(stack.size() >= 2) {
-                uint16_t firstNum = stack.back(); stack.pop_back();
-                uint16_t secondNum = stack.back(); stack.pop_back();
-                uint16_t numSums = secondNum >> firstNum;
-                stack.push_back(numSums);
-                return make_shared<uint16_t>(numSums);
+                uint16_t second_number = stack.back(); stack.pop_back();
+                uint16_t first_number = stack.back(); stack.pop_back();
+                uint16_t answer = first_number >> second_number;
+                stack.push_back(answer);
+                return make_shared<uint16_t>(answer);
             }
+            return nullptr;
+            
         case cmd_or:
             if(stack.size() >= 2) {
-                uint16_t firstNum = stack.back(); stack.pop_back();
-                uint16_t secondNum = stack.back(); stack.pop_back();
-                uint16_t numSums = secondNum | firstNum;
-                stack.push_back(numSums);
-                return make_shared<uint16_t>(numSums);
+                uint16_t second_number = stack.back(); stack.pop_back();
+                uint16_t first_number = stack.back(); stack.pop_back();
+                uint16_t answer = first_number | second_number;
+                stack.push_back(answer);
+                return make_shared<uint16_t>(answer);
             }
+            return nullptr;
+            
         case cmd_and:
             if(stack.size() >= 2) {
-                uint16_t firstNum = stack.back(); stack.pop_back();
-                uint16_t secondNum = stack.back(); stack.pop_back();
-                uint16_t numSums = secondNum & firstNum;
-                stack.push_back(numSums);
-                return make_shared<uint16_t>(numSums);
+                uint16_t second_number = stack.back(); stack.pop_back();
+                uint16_t first_number = stack.back(); stack.pop_back();
+                uint16_t answer = first_number & second_number;
+                stack.push_back(answer);
+                return make_shared<uint16_t>(answer);
             }
-    uint16_t val = 0b1001100100000011;
-    shared_ptr<uint16_t> result = make_shared<uint16_t>(val);
-    return result;
+            return nullptr;
+            
+        case cmd_add:
+            if(stack.size() >= 2) {
+                uint16_t second_number = stack.back(); stack.pop_back();
+                uint16_t first_number = stack.back(); stack.pop_back();
+                uint16_t answer = first_number + second_number;
+                stack.push_back(answer);
+                return make_shared<uint16_t>(answer);
+            }
+            return nullptr;
+            
+        default:
+            return nullptr;
+    }
 }
 
 /*
